@@ -42,19 +42,27 @@ except FileNotFoundError:
 
 
 
-st.title("VeriFyIt")
 st.write("")
-st.subheader("Select Your Role")
+st.markdown("<br><br>", unsafe_allow_html=True)
 
-col1, col2 = st.columns(2)
+# Center "Select Your Role"
+st.markdown("<h2 style='text-align: center;'>Select Your Role</h2>", unsafe_allow_html=True)
+
+st.markdown("<br><br>", unsafe_allow_html=True)
+
+# Load logos
 institite_logo = Image.open("../assets/MyIns.png")
+company_logo = Image.open("../assets/VerifiersLog.jpg")
+
+# Equal margins on both sides using columns
+spacer1, col1, col2, spacer2 = st.columns([1.5, 3, 1.5, 1])
+
 with col1:
-    st.image(institite_logo, output_format="png", width=230)
+    st.image(institite_logo, output_format="png", width=270)
     clicked_institute = st.button("Institute")
 
-company_logo = Image.open("../assets/VerifiersLog.jpg")
 with col2:
-    st.image(company_logo, output_format="jpg", width=230)
+    st.image(company_logo, output_format="jpg", width=290)
     clicked_verifier = st.button("Verifier")
 
 if clicked_institute:
