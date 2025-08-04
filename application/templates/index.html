@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block title %}Pursuit Feature Technologies{% endblock %}
+
+{% block content %}
+<style>
+  /* Full page background gradient */
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #2f2e7c 0%, #6c63ff 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+  }
+
+  /* Container to center content with white background */
+  .content-wrapper {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 3rem 4rem;
+    box-shadow: 0 15px 40px rgba(41, 36, 255, 0.25);
+    max-width: 900px;
+    width: 90vw;
+    color: #2f2e7c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h2 {
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #2f2e7c;
+  }
+
+  .verification-options {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .verify-card {
+    background: #f5f6ff;
+    border-radius: 16px;
+    padding: 2rem 3rem;
+    box-shadow: 0 10px 30px rgb(0 40 66 / 0.12);
+    min-width: 320px;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .verify-card:hover, .verify-card:focus-within {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(108, 99, 255, 0.4);
+  }
+
+  label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #2f2e7c;
+  }
+
+  input[type="text"],
+  input[type="file"] {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 2px solid #3a3a93;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  input[type="text"]:focus,
+  input[type="file"]:focus {
+    outline: none;
+    border-color: #6c63ff;
+    box-shadow: 0 0 8px #6c63ff;
+  }
+
+  .button {
+    margin-top: 1.5rem;
+    background: linear-gradient(90deg, #574ee5 0%, #6c63ff 100%);
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.7rem 2rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgb(108 99 255 / 0.5);
+    width: 100%;
+    max-width: 400px;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .button:hover,
+  .button:focus {
+    background: linear-gradient(90deg, #6c63ff 0%, #574ee5 100%);
+    box-shadow: 0 8px 30px rgb(108 99 255 / 0.8);
+  }
+
+  #verify-id-result,
+  #verify-pdf-result {
+    min-height: 2.2rem;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .wallet-info {
+    margin-top: 3rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  #wallet {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #2f2e7c;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 900px) {
+    .verification-options {
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .verify-card {
+      max-width: 100%;
+      padding: 1.5rem 2rem;
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="content-wrapper">
+  <h2>Pursuit Future Technologies</h2>
+
+  <div class="verification-options">
+    <div class="verify-card">
+      <form id="verify-id-form" onsubmit="return verifyById(event)" style="display: flex; flex-direction: column; align-items: center;">
+        <label for="certificateId">Enter Certificate ID:</label>
+        <input type="text" id="certificateId" name="certificateId" required />
+        <button class="button" type="submit">Verify with ID</button>
+      </form>
+      <div id="verify-id-result"></div>
+    </div>
+    <div class="verify-card">
+      <form id="verify-pdf-form" onsubmit="return verifyByPdf(event)" enctype="multipart/form-data" style="display: flex; flex-direction: column; align-items: center;">
+        <label for="pdfFile">Upload Certificate PDF:</label>
+        <input type="file" id="pdfFile" name="pdf_file" accept="application/pdf" required />
+        <button class="button" type="submit">Verify with PDF</button>
+      </form>
+      <div id="verify-pdf-result"></div>
+    </div>
+  </div>
+
+  <div class="wallet-info">
+    <p id="wallet">Not connected</p>
+    <button class="button" onclick="connectMetaMask()">Connect MetaMask</button>
+  </div>
+</div>
+
+<script>
+async function verifyById(event) {
+    event.preventDefault();
+    const certId = document.getElementById('certificateId').value;
+    const resultDiv = document.getElementById('verify-id-result');
+    resultDiv.innerHTML = 'Verifying...';
+    try {
+        const response = await fetch('/api/verify-certificate-id', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ certificateId: certId })
+        });
+        const data = await response.json();
+        if (data.success && data.pdfHtml) {
+            resultDiv.innerHTML = data.pdfHtml;
+        } else {
+            resultDiv.innerHTML = `<span style='color:red'>${data.error || 'Certificate not found or invalid on blockchain.'}</span>`;
+        }
+    } catch (err) {
+        resultDiv.innerHTML = `<span style='color:red'>Error: ${err.message}</span>`;
+    }
+    return false;
+}
+
+async function verifyByPdf(event) {
+    event.preventDefault();
+    const form = document.getElementById('verify-pdf-form');
+    const formData = new FormData(form);
+    const resultDiv = document.getElementById('verify-pdf-result');
+    resultDiv.innerHTML = 'Verifying...';
+    try {
+        const response = await fetch('/api/verify-pdf', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+        if (data.success && data.verified && data.pdfHtml) {
+            resultDiv.innerHTML = data.pdfHtml;
+        } else {
+            resultDiv.innerHTML = `<span style='color:red'>${data.error || 'Certificate not found or invalid on blockchain.'}</span>`;
+        }
+    } catch (err) {
+        resultDiv.innerHTML = `<span style='color:red'>Error: ${err.message}</span>`;
+    }
+    return false;
+}
+</script>
+
+{% endblock %}

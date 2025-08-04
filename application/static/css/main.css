@@ -1,0 +1,249 @@
+/* Main CSS file for VeriSure application */
+
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Styles */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Logo Styles */
+.logo {
+    width: 600px;
+    margin: 20px auto;
+}
+
+/* Role Selection Styles */
+.role-selection {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.role-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.role-card:hover {
+    transform: translateY(-5px);
+}
+
+.role-card img {
+    width: 270px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.role-card h3 {
+    margin: 0;
+    color: #333;
+}
+
+/* Form Styles */
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Button Styles */
+.button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin: 5px;
+}
+
+.button:hover {
+    background: #0056b3;
+}
+
+.home-button {
+    background: #6c757d;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.logout-button {
+    background: #dc3545;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+/* Dashboard Styles */
+.dashboard {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.cert-form, .verify-form {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #f8f9fa;
+}
+
+/* Message Styles */
+.success-message {
+    color: #155724;
+    background: #d4edda;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    display: none;
+}
+
+.error-message {
+    color: #dc3545;
+    background: #f8d7da;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    display: none;
+}
+
+.warning-message {
+    color: #856404;
+    background: #fff3cd;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    display: none;
+}
+
+.info-message {
+    color: #0c5460;
+    background: #d1ecf1;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    display: none;
+}
+
+/* PDF Viewer Styles */
+.pdf-viewer {
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* File Upload Styles */
+.file-upload {
+    border: 2px dashed #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    margin: 10px 0;
+    background: #f8f9fa;
+}
+
+.file-upload:hover {
+    border-color: #007bff;
+}
+
+/* Wallet Info Styles */
+.wallet-info {
+    margin-top: 20px;
+    padding: 10px;
+    background: #e8f5e8;
+    border-radius: 5px;
+}
+
+/* Link Styles */
+.login-link, .register-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-link a, .register-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-link a:hover, .register-link a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .role-selection {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .role-card img {
+        width: 200px;
+    }
+    
+    .logo {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .dashboard, .form-container {
+        margin: 10px;
+        padding: 20px;
+    }
+} 

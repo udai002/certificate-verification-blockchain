@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Login - VeriSure{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>Pursuit Future Technologies - Login</h1>
+</div>
+
+<button class="home-button" onclick="window.location.href='/'">Home</button>
+
+<div class="form-container">
+    <h2 style="text-align: center; margin-bottom: 30px;">Login</h2>
+    
+    <div id="errorMessage" class="error-message"></div>
+    <div id="successMessage" class="success-message"></div>
+    
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="button">Login</button>
+    </form>
+    
+    <div class="register-link" id="registerSection" style="display: none;">
+        <p>New user? <a href="/register">Click here to register!</a></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Show register link only for non-Institute users
+    const userProfile = '{{ user_profile }}';
+    if (userProfile !== 'Institute') {
+        document.getElementById('registerSection').style.display = 'block';
+    }
+</script>
+{% endblock %} 

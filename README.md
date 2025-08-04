@@ -1,17 +1,75 @@
-VerifyLab
-                                                             
-This project provides a Blockchain based solution for generating and verifying digital certificates. The certificate information (uid, candidate_name, course_name, org_name, ipfs_hash) is stored on the blockchain. First, the certificate pdf is generated and stored onto IPFS using Pinata service. Then, the IPFS hash obtained is stored on the blockchain along with other information.
+# VeriSure - Blockchain Certificate Verification System
 
+A comprehensive blockchain-based certificate verification system with separate testing (Streamlit) and deployment (Flask) environments.
 
-The system categorized in to two entities:
-- **Institute**: Responsible for generating and issuing certificates. Has the functionality to generate and view certificates.
+## Project Structure
 
-- **Verifier**: Responsible for verifying certificates. Has the functionality to verify certificates by either uploading a certificate pdf or by inputting the certificate id.
+```
+pursuit/
+├── streamlit_app/          # Streamlit application for testing
+│   ├── app.py             # Main Streamlit app
+│   ├── pages/             # Streamlit pages
+│   ├── utils/             # Utility functions
+│   ├── db/                # Database connections
+│   ├── assets/            # Static assets
+│   └── requirements.txt   # Python dependencies
+├── flask_app/             # Flask application for deployment
+│   ├── app.py             # Main Flask app
+│   ├── static/            # Static files (CSS, JS, images)
+│   ├── templates/         # HTML templates
+│   ├── utils/             # Utility functions
+│   ├── db/                # Database connections
+│   ├── api/               # API endpoints
+│   └── requirements.txt   # Python dependencies
+├── contracts/             # Smart contracts
+├── migrations/            # Database migrations
+├── assets/                # Shared assets
+└── docs/                  # Documentation
+```
 
-## Key Terminologies
+## Features
 
-- **Smart Contract:** Utilizes a Solidity smart contract to manage and store certificate details on the Ethereum blockchain.
-- **IPFS Integration:** Stores certificate PDFs on IPFS via Pinata for decentralized and secure file storage.
-- **Firebase Authentication:** Uses Firebase for authentication.
-- **Streamlit App:** Provides a user-friendly interface for generating and verifying certificates.
+- **Blockchain Integration**: Smart contract-based certificate storage and verification
+- **Dual Interface**: Streamlit for testing, Flask for production deployment
+- **Certificate Generation**: Create and issue certificates on blockchain
+- **Certificate Verification**: Verify certificates using PDF upload or certificate ID
+- **User Authentication**: Firebase-based authentication system
+- **IPFS Storage**: Pinata IPFS integration for certificate storage
+
+## Quick Start
+
+### Streamlit (Testing Environment)
+```bash
+cd streamlit_app
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+### Flask (Production Environment)
+```bash
+cd flask_app
+pip install -r requirements.txt
+python app.py
+```
+
+## Smart Contract Deployment
+
+```bash
+truffle migrate --reset
+```
+
+## Environment Variables
+
+Create `.env` files in both `streamlit_app/` and `flask_app/` directories:
+
+```
+PINATA_API_KEY=your_pinata_api_key
+PINATA_API_SECRET=your_pinata_secret_key
+institute_email=your_institute_email
+institute_password=your_institute_password
+```
+
+## License
+
+MIT License
 

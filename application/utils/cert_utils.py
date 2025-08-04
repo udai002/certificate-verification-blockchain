@@ -7,10 +7,10 @@ import re
 
 
 def generate_certificate(pdf_file_path, uid, candidate_name, course_name, org_name, logo_path):
-    """Generate a PDF certificate with a professional design."""
-    signature_path = r"C:\Users\mvams\Downloads\MySignNorm.png"
-    slide_design_path = r"C:\Users\mvams\Downloads\slideDesign.jpg"
-    award_logo_path = r"C:\Users\mvams\Downloads\AwardLogo.png"
+    """Generate a PDF certificate with a  design."""
+    signature_path = r"D:\gnane\Downloads\nonservicable.jpeg"
+    slide_design_path = r"D:\gnane\Downloads\nonservicable.jpeg"
+    award_logo_path = r"D:\gnane\Downloads\nonservicable.jpeg"
     
     c = canvas.Canvas(pdf_file_path, pagesize=landscape(letter))
     width, height = landscape(letter)

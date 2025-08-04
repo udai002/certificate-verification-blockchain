@@ -53,7 +53,7 @@ def upload_to_pinata(file_path, api_key, api_secret):
 
 
 options = ("Generate Certificate", "View Certificates")
-selected = st.selectbox("", options, label_visibility="hidden")
+selected = st.selectbox("Select an option", options, label_visibility="hidden")
 
 if selected == options[0]:
     form = st.form("Generate-Certificate")
@@ -66,7 +66,7 @@ if selected == options[0]:
     submit = form.form_submit_button("Submit")
     if submit:
         pdf_file_path = "certificate.pdf"
-        logo_path = "C:/Users/mvams/Downloads/ProjectOrg.jpg"
+        logo_path = r"D:\gnane\Downloads\nonservicable.jpeg"
         
         generate_certificate(pdf_file_path, uid, candidate_name, course_name, org_name, logo_path)
 
@@ -77,16 +77,23 @@ if selected == options[0]:
         certificate_id = hashlib.sha256(data_to_hash).hexdigest() 
 
         # Smart Contract Call
-        contract.functions.generateCertificate(certificate_id, uid, candidate_name, course_name, org_name, ipfs_hash).transact({'from': w3.eth.accounts[1]})
+        contract.functions.generateCertificate(certificate_id, uid, candidate_name, course_name, org_name, ipfs_hash).transact({'from': w3.eth.accounts[0]})
         st.success(f"Certificate successfully generated with Certificate ID: {certificate_id}")
+        st.info(f"Use this Certificate ID for verification: {certificate_id}")
+        print(f"[DEBUG] Certificate ID generated: {certificate_id}")
 
 else:
     form = st.form("View-Certificate")
     certificate_id = form.text_input("Enter the Certificate ID")
     submit = form.form_submit_button("Submit")
     if submit:
-        try:
-            view_certificate(certificate_id)
-        except Exception as e:
-            st.error("Invalid Certificate ID!")
+        print(f"[DEBUG] Certificate ID entered for verification: {certificate_id}")
+        is_verified = contract.functions.isVerified(certificate_id).call()
+        if not is_verified:
+            st.error("Certificate ID not found on blockchain.")
+        else:
+            try:
+                view_certificate(certificate_id)
+            except Exception as e:
+                st.error("Invalid Certificate ID!")
         
