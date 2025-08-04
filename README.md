@@ -38,19 +38,6 @@ pursuit/
 
 ## Quick Start
 
-### Streamlit (Testing Environment)
-```bash
-cd streamlit_app
-pip install -r requirements.txt
-streamlit run app.py
-```
-
-### Flask (Production Environment)
-```bash
-cd flask_app
-pip install -r requirements.txt
-python app.py
-```
 
 ## Smart Contract Deployment
 
